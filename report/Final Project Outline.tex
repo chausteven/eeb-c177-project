@@ -1,0 +1,91 @@
+\documentclass[letterpaper]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{listings}
+
+\title {My Final Project Outline}
+\author{Steven Chau}
+\date{Winter 2020}
+
+\begin{document}
+\maketitle 
+\section*{Abstract}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae turpis massa sed elementum tempus egestas sed sed. In iaculis nunc sed augue lacus viverra vitae congue eu. Mattis molestie a iaculis at. Et netus et malesuada fames ac. Sed elementum tempus egestas sed sed risus pretium quam. Molestie at elementum eu facilisis sed. Bibendum ut tristique et egestas quis ipsum. Dictum fusce ut placerat orci nulla pellentesque dignissim. A iaculis at erat pellentesque adipiscing. Leo urna molestie at elementum eu facilisis. Semper risus in hendrerit gravida rutrum quisque non. Sit amet justo donec enim diam vulputate ut. Tellus mauris a diam maecenas sed. Non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Dictum sit amet justo donec enim diam. Elementum sagittis vitae et leo duis ut diam quam nulla. Nunc faucibus a pellentesque sit amet porttitor eg
+et dolor morbi.
+\section*{Introduction}
+The main purpose of this data analysis was to see if there were any correlation between the animal being exposed to predators (or naive to predators) and the anti-predatorial behavior of those animals. This in turn can help conservationist understand why translocation of some species might be unsuccessful and guide them in devising a better plan to successfully reintroduce endanger species that have been isolated from habitats with predators.
+
+\section*{Methods}
+\begin{lstlisting}[language = Python]
+#Import necessary modules
+import pandas as pd
+import matplotlib.pyplot as plt
+import re
+
+#Create a function to use inside of the main data analysis function
+def fileguard(file):  
+    csv = re.compile(r'.*\.csv') #Defines the pattern to search for
+    file = csv.search(file) #Searches for the pattern given the input 
+    return bool(file)
+   
+def dataanalysis(filename='', stat='', key=''):    
+    filename = str(input('What .csv file would you like to analyze?'))
+    #Asks what csv file you would like to analyze and takes the csv file and reads it, and asks the user for inputs for what they want to find and for what category. 
+    assert fileguard(filename) == True, "This file type cannot be used, please use a .csv file type" #Checks if the input for the file is a .csv file, if not it will propse an assertion error saying to input a .csv file
+    data = pd.read_csv(filename)
+    stat = str(input('What statistic do you want to find from the data? (i.e. Max, Min, Avg, Std) '))
+    assert stat.upper() == 'MAX' or stat.upper() == 'MIN' or stat.upper() == 'AVG' or stat.upper() == 'STD', 'Please choose one of the example statistical analysis' #Checks if the input for the type of statistic is one of the options avaliable, if not will propose an assertion error
+    key = str(input('What do you want to find the {} of? (i.e Slow approach, Vigilance, Foraging)'.format(stat)))
+    assert key == 'Foraging' or key == 'Vigilance' or key == 'Slow approach', "Please choose from one of the catagories shown above" #Checks if the input for the catagory is one of the columns in the dataset, if not propse an assertion error.  
+    #Seperates the data based on treatment type
+    catdata = data.loc[data['TREATMENT'] == 'Cat']
+    controldata = data.loc[data['TREATMENT'] == 'Control']
+    #If statements to check what statistic the user wants to find out
+    #Prints out the the behavior score depending on the statistics and rounds it to 3 sigfig
+    #Plots behavior score for each subject based on their treatment type using matplotlib
+    if stat.upper() == 'MAX': #Max function
+        print('This is the maximum behavior score for bettongs exposed to cats:',round(catdata[key].max(), 3))
+        print('This is the maximum behavior score for bettongs not exposed to cats:',round(controldata[key].max(), 3))
+        plt.scatter(range(len(catdata)),catdata[key], label='Cat Exposed')
+        plt.scatter(range(len(controldata)),controldata[key], label='Control')
+        plt.legend(loc='upper right') #Creates a legend on the top right with two labels, 'Cat Exposed' and 'Control'
+        plt.ylabel('Behavior Score') #Label the axis of the graph 
+        plt.xlabel('Subject #')
+    elif stat.upper() == 'MIN': #Min function
+        print('This is the minimum behavior score for bettongs exposed to cats:',round(catdata[key].min(), 3))
+        print('This is the minimum behavior score for bettongs not exposed to cats:',round(controldata[key].min(), 3))
+        plt.scatter(range(len(catdata)),catdata[key], label='Cat Exposed')
+        plt.scatter(range(len(controldata)),controldata[key], label='Control')
+        plt.legend(loc='upper right')
+        plt.ylabel('Behavior Score')
+        plt.xlabel('Subject #')
+    elif stat.upper() == 'AVG': #Average function
+        print('This is the average behavior score for bettongs exposed to cats:',round(catdata[key].mean(), 3))
+        print('This is the average behavior score for bettongs not exposed to cats:',round(controldata[key].mean(), 3))
+        plt.scatter(range(len(catdata)),catdata[key], label='Cat Exposed')
+        plt.scatter(range(len(controldata)),controldata[key], label='Control')
+        plt.legend(loc='upper right')
+        plt.ylabel('Behavior Score')
+        plt.xlabel('Subject #')
+    elif stat.upper() == 'STD': #Standard deviation function
+        print('This is the standard deviation for behavior score for bettongs exposed to cats:', round(catdata[key].std(), 3))
+        print('This is the standard deviation for behavior scores for bettongs not exposed to cats:',round(controldata[key].std(), 3))
+        plt.scatter(range(len(catdata)),catdata[key], label='Cat Exposed')
+        plt.scatter(range(len(controldata)),controldata[key], label='Control')
+        plt.legend(loc='upper right')
+        plt.ylabel('Behavior Score')
+        plt.xlabel('Subject #')
+\end{lstlisting}
+
+\section*{Results}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae turpis massa sed elementum tempus egestas sed sed. In iaculis nunc sed augue lacus viverra vitae congue eu. Mattis molestie a iaculis at. Et netus et malesuada fames ac. Sed elementum tempus egestas sed sed risus pretium quam. Molestie at elementum eu facilisis sed. Bibendum ut tristique et egestas quis ipsum. Dictum fusce ut placerat orci nulla pellentesque dignissim. A iaculis at erat pellentesque adipiscing. Leo urna molestie at elementum eu facilisis. Semper risus in hendrerit gravida rutrum quisque non. Sit amet justo donec enim diam vulputate ut. Tellus mauris a diam maecenas sed. Non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Dictum sit amet justo donec enim diam. Elementum sagittis vitae et leo duis ut diam quam nulla. Nunc faucibus a pellentesque sit amet porttitor eg
+et dolor morbi.
+
+\section*{Discussion}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae turpis massa sed elementum tempus egestas sed sed. In iaculis nunc sed augue lacus viverra vitae congue eu. Mattis molestie a iaculis at. Et netus et malesuada fames ac. Sed elementum tempus egestas sed sed risus pretium quam. Molestie at elementum eu facilisis sed. Bibendum ut tristique et egestas quis ipsum. Dictum fusce ut placerat orci nulla pellentesque dignissim. A iaculis at erat pellentesque adipiscing. Leo urna molestie at elementum eu facilisis. Semper risus in hendrerit gravida rutrum quisque non. Sit amet justo donec enim diam vulputate ut. Tellus mauris a diam maecenas sed. Non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Dictum sit amet justo donec enim diam. Elementum sagittis vitae et leo duis ut diam quam nulla. Nunc faucibus a pellentesque sit amet porttitor eg
+et dolor morbi.
+
+\section*{References Cited}
+West, Rebecca; Letnic, Mike; Blumstein, Daniel T.; Moseby, Katherine E. (2017), Predator exposure improves anti-predator responses in a threatened mammal, Journal of Applied Ecology, Article-journal, https://doi.org/10.1111/1365-2664.12947
+\end{document}
+
