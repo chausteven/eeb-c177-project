@@ -3,6 +3,10 @@
 \usepackage[margin=1.25in]{geometry}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{graphicx}
+
+\graphicspath{{Images/}}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -103,9 +107,58 @@ def dataanalysis(filename='', stat='', key=''):
         plt.xlabel('Subject #')
 \end{lstlisting}
 
+Code for Figure 1 (see Figure \ref{fig:1} on page \pageref{fig:1})
+\begin{lstlisting}[language = R]
+ggplot(Anti_predator, aes(Vigilance, `Foraging`, color =`TREATMENT`)) + #Using Anti_predator dataset, call for Vigilance as my x-values and Foraging for my y-values, also colors the points based on treatment type
+  geom_point(size = 4, shape = 1 ) + #Changing size and shape of data point
+  scale_color_brewer(palette = "Set1") + #Changing color palette
+  geom_smooth(method = lm) + #Adding linear line of best fit
+  labs(title = "Foraging vs Vigilance\nIn Predator Treated Animals and Non-predator Treated Animals",
+       x = 'Behavior Score (Vigilance)', y ='Behavior Score (Foraging)',
+       color = "Treatment Type") + #Label title, axis, and legend
+  theme_bw() #Change theme
+\end{lstlisting}
+
+Code for Figure 2 (see Figure \ref{fig:2} on page \pageref{fig:2})
+\begin{lstlisting}[language = R]
+ggplot(Anti_predator, aes(`TREATMENT`, `Vigilance`, fill = TREATMENT)) + #Using Anti_predator dataset, call for TREATMENT as my x-value and Vigilance for my y-values, also colors box plots based on treatment type
+  geom_boxplot() + #Creates a box plot layer
+  geom_point() + #Creates a scatter plot layer
+  labs(title = "Vigilance Behavior in Predator Treated Animals\nvs Non-Predator Treated Animals",
+       x = "Treatment Type", y = 'Behavior Score (Vigilance)') + #Label title, x-axis, and y-axis
+  scale_fill_discrete(name = "Treatment Type") + #Label legend title
+  theme_bw() #Change theme
+\end{lstlisting}
+
+Code for Figure 3 (see Figure \ref{fig:3} on page \pageref{fig:3})
+\begin{lstlisting}[language = R]
+ggplot(Anti_predator, aes(`TREATMENT`, `Foraging`, fill = TREATMENT)) + #Using Anti_predator dataset, call for TREATMENT as my x-value and Foraging for my y-values, also colors box plots based on treatment type
+  geom_boxplot() + #Creates a box plot layer 
+  geom_point() + #Creates a scatter plot layer
+  labs(title = "Foraging Behavior in Predator Treated Animals\nvs Non-Predator Treated Animals",
+       x = "Treatment Type", y = 'Behavior Score (Foraging)') + #Label title, x-axis, and y-axis
+  scale_fill_discrete(name = "Treatment Type") + #Label legend title
+  theme_bw() #Change theme
+\end{lstlisting}
+
 \section*{Results}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae turpis massa sed elementum tempus egestas sed sed. In iaculis nunc sed augue lacus viverra vitae congue eu. Mattis molestie a iaculis at. Et netus et malesuada fames ac. Sed elementum tempus egestas sed sed risus pretium quam. Molestie at elementum eu facilisis sed. Bibendum ut tristique et egestas quis ipsum. Dictum fusce ut placerat orci nulla pellentesque dignissim. A iaculis at erat pellentesque adipiscing. Leo urna molestie at elementum eu facilisis. Semper risus in hendrerit gravida rutrum quisque non. Sit amet justo donec enim diam vulputate ut. Tellus mauris a diam maecenas sed. Non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Dictum sit amet justo donec enim diam. Elementum sagittis vitae et leo duis ut diam quam nulla. Nunc faucibus a pellentesque sit amet porttitor eg
-et dolor morbi.
+\begin{figure}[h]
+	\caption{Shows the Foraging Behavior score vs Vigilance Behavior score for each test subject. Separates based on treatment type, whether the test subject was exposed to predators or not.\label{fig:1}}
+	\centering
+	\includegraphics[width=0.5\paperwidth]{ForagingVsVigilance}
+\end{figure}
+\begin{figure}[h]
+	\caption{Box plot showing Vigilance Behavior score for each test subject based on treatment type.\label{fig:2}}
+	\centering
+	\includegraphics[width=0.5\paperwidth]{VigilanceBoxplot}
+\end{figure}
+\begin{figure}[h]
+	\caption{Box plot showing Foraging Behavior score for each test subject based on treatment type.\label{fig:3}}
+	\centering
+	\includegraphics[width=0.5\paperwidth]{ForagingBoxplot}
+\end{figure}
+\clearpage
+
 
 \section*{Discussion}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae turpis massa sed elementum tempus egestas sed sed. In iaculis nunc sed augue lacus viverra vitae congue eu. Mattis molestie a iaculis at. Et netus et malesuada fames ac. Sed elementum tempus egestas sed sed risus pretium quam. Molestie at elementum eu facilisis sed. Bibendum ut tristique et egestas quis ipsum. Dictum fusce ut placerat orci nulla pellentesque dignissim. A iaculis at erat pellentesque adipiscing. Leo urna molestie at elementum eu facilisis. Semper risus in hendrerit gravida rutrum quisque non. Sit amet justo donec enim diam vulputate ut. Tellus mauris a diam maecenas sed. Non pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Dictum sit amet justo donec enim diam. Elementum sagittis vitae et leo duis ut diam quam nulla. Nunc faucibus a pellentesque sit amet porttitor eg
